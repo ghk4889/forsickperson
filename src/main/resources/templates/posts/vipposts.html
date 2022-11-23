@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragment :: head}">
+    <meta charset="UTF-8">
+    <title> vip 등급 게시글 목록 (no replace)</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+<nav th:replace="~{fragment :: nav}" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Board Project</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">게시판</a>
+            <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid mx-3 my-5">
+
+
+    <div class="row ">
+
+        <div class="container-fluid col" style="width:70%">
+
+            <div class="row d-flex justify-content-between">
+
+                <h3>[게시판]</h3>
+
+                <h5 th:if="${param.keyword}" th:text="'&quot;'+${param.keyword}+'&quot;으로 검색한 결과'">"~"으로 검색한 결과</h5>
+
+                <!--검색창-->
+                <form th:replace="~{fragment :: searchForm}" id="searchForm" action="/vipposts/search" method="GET" class="form-inline p-2" role="search">
+                    <input type="text" name="keyword" class="form-control" id="search" placeholder="thymeleaf 동작 X">
+                    <button class="btn btn-success mx-1">검색</button>
+                </form>
+
+            </div>
+            <div class="row">
+                <!-- 게시글 목록-->
+                <div class="float-left w-100"  >
+                    <!-- 게시판 좌우 마진-->
+                    <div class="mx-5"></div>
+
+                    <div class="col-md-offset-1 col-md-auto my-3 mx-4" style="width:75%">
+
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width: 7%">No.</th>
+                                <th style="width: 40%">제목</th>
+                                <th style="width: 12%">고용비</th>
+                                <th style="width: 12%">작성자</th>
+                                <th style="width: 17%">작성일</th>
+                                <th style="width: 12%">조회수</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="post : ${posts}">
+                                <td ><a href="post.html" th:href="@{/vipposts/{postId}(postId=${post.id})}"
+                                        th:text="${post.id}">번호</a></td>
+                                <td ><a href="post.html" th:href="@{|/vipposts/${post.id}|}"
+                                        th:text="${post.title}">제목목목목asdfasdfasff</a></td>
+                                <td th:text="${post.pay}">10,000 원</td>
+                                <td th:text="${post.writer}">작성자</td>
+                                <td th:text="${post.createdDate}">2022-08-16</td>
+                                <td th:text="${post.viewCount}">8</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--pagination-->
+            <div class="row d-flex justify-content-center">
+
+                <nav aria-label="Page navigation" class="my-5 mx-5" th:object="${pagination}">
+                    <ul class="pagination justify-content-center" th:with="postfix = ${keyword}?'/search?keyword='+${keyword}:''">
+
+
+                        <li class="page-item " th:if="*{prev}">
+                            <a class="page-link" href="#" th:href="@{|/vipposts${postfix}|(currentPageNum=*{startPageNum - 1})}" tabindex="-1"><</a>
+                        </li>
+                        <li class="page-item" th:each="num : ${#numbers.sequence(pagination.startPageNum, pagination.endPageNum)}">
+                            <a class="page-link" href="#" th:href="@{|/vipposts${postfix}|(currentPageNum=${num})}"
+                               th:text="${num}" th:classappend="(*{currentPageNum}==${num})?'bg-secondary text-white':''">1</a>
+                        </li>
+
+                        <li class="page-item" th:if="*{next}">
+                            <a class="page-link" href="#" th:href="@{|/vipposts${postfix}|(currentPageNum=*{endPageNum + 1})}" tabindex="-1">></a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="mx-5 my-5">
+                    <a class="btn btn-warning" type="button" th:href="@{vipposts/new}">글쓰기</a>
+                </div>
+            </div>
+
+        </div> <!-- sub container end -->
+
+
+        <!--        <div class="col"></div> &lt;!&ndash;빈 칸 역할&ndash;&gt;-->
+
+        <!--회원 정보 카드-->
+        <div th:fragment="userCard" class="col-3 mx-2 my-5">
+            <script>
+                function employer() {
+                    alert("아픈 사람(장애인, 큰 병 앓는 사람 등)")
+                }
+
+                function employee(){
+                    alert("피 고용인(보호자)")
+                }
+            </script>
+            <div class="card text-center" style="width: 15rem;">
+                <div class="card-body">
+
+                    <h5 class="card-title">핵심역량 경진대회</h5>
+                    <div style="text-align:left;" >
+                        <p class="card-text mb-0">*팀명: XXX </p>
+                        <p class="card-text mb-0">팀장: 오종화 </p>
+                        <p class="card-text">팀원: 석민환, 황지원</p>
+                    </div>
+
+                    <p style="text-align:left;" class="mt-3 mb-0">*서비스 설명 </p>
+                    <p>장애인이나 크게 아픈 환자들이 어떤 일을 대신해줄 사람을 구직하는 플랫폼</p>
+
+                    <a onclick="employer()" class="btn btn-primary my-3">고용인</a>
+                    <a onclick="employee()" class="btn btn-info">대리인</a>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div> <!-- container end-->
+
+
+<footer th:replace="~{fragment :: footer}" class="footer mt-auto py-3 bg-light fixed-bottom">
+    <div class="container">
+        <span class="text-muted">형식상 footer(thymeleaf X)</span>
+    </div>
+</footer>
+</body>
+
+</html>
