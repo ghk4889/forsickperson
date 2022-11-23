@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragment :: head}">
+    <meta charset="UTF-8">
+    <title> 게시글 수정 폼 페이지 (no replace)</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+<nav th:replace="~{fragment :: nav}" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Board Project</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">게시판</a>
+            <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid mx-3 my-5">
+
+
+    <div class="row ">
+
+        <div class="container-fluid col-6 mx-0 " >
+
+            <div class="row d-flex justify-content-between">
+
+                <h3>[구인 글 수정]</h3>
+
+                <h5>(게시글 수정 폼)</h5>
+
+
+            </div>
+
+            <!-- 수정 폼-->
+
+            <div id="posts_list" class="row mt-5">
+                <div class="col-md-12 ">
+                    <form class="card">
+                        <div class="card-body">
+                            <div>
+                                <div class="form-check-inline ">
+                                    <input type="radio" class="form-check-input" id="simpleJob" value="simple" name="gradeRadio" readonly>
+                                    <label for="simpleJob" class="form-check-label">단순 업무</label>
+                                </div>
+
+                                <div class="form-check-inline ">
+                                    <input type="radio" class="form-check-input" id="complicatedJob" value="complicated" name="gradeRadio" readonly>
+                                    <label for="complicatedJob" class="form-check-label">복잡한 업무</label>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <label for="title">고용비</label>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+
+                                <input type="text" class="form-control w-25 p-3" id="pay" placeholder="Enter pay">
+                                <p style="font-size:25px">&nbsp 원</p>
+                            </div>
+
+
+                            <br/>
+                            <label for="title">제목</label>
+                            <input type="text" class="form-control" id="title" th:value="${post.title}">
+                            <br/>
+                            <label for="content">내용</label>
+                            <textarea rows="5" class="form-control" id="content" th:text="${post.content}">기존 내용</textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div> <!-- sub container end -->
+
+
+        <div class="col-2 d-flex align-items-end">
+            <div class="row p-2">
+                <!--                <a href="/" role="button" class="btn btn-info bi bi-arrow-return-left mx-1"> 목록</a>-->
+                <a href="#" role="button" class="btn btn-info bi bi-pencil-square mx-1"> 수정 완료</a>
+                <a th:href="@{|/${postType}posts/${post.id}|}" role="button" class="btn btn-secondary bi bi-trash mx-1" > 취소</a>
+<!--                <button type="button" onclick="" id="btn-delete" class="btn btn-danger bi bi-trash mx-1"> 취소</button>-->
+            </div>
+        </div>
+
+
+        <!--회원 정보 카드-->
+        <div th:replace="~{fragment :: userCard}" class="col-2 mx-2 my-5">
+            <div class="card text-center" style="width: 15rem;">
+                <div class="card-body ">
+                    <h5 class="card-title">로그인 하시면 게시글 작성이 가능합니다.</h5>
+                    <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                    <a href="#" class="btn btn-primary my-3">로그인</a>
+                    <a href="#" class="btn btn-info">회원 가입</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div> <!-- container end-->
+
+
+<footer th:replace="~{fragment :: footer}" class="footer mt-auto py-3 bg-light ">
+    <div class="container">
+        <span class="text-muted">형식상 footer</span>
+    </div>
+</footer>
+
+</body>
+</html>

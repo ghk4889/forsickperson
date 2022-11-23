@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragment :: head}">
+    <meta charset="UTF-8">
+    <title> 게시글 상세 페이지 (no replace)</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <style>
+
+    </style>
+</head>
+<body>
+<nav th:replace="~{fragment :: nav}" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Board Project</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">게시판</a>
+            <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid  my-5">
+
+
+    <div class="row ">
+
+        <div class="container-fluid mx-0 col-6 " >
+
+            <div class="row d-flex justify-content-between">
+
+                <h3></h3>
+
+                <!--검색창-->
+                <form th:replace="~{fragment :: searchForm}" id="searchForm" action="/posts/search" method="GET" class="form-inline p-2" role="search">
+                    <input type="text" name="keyword" class="form-control" id="search" placeholder="검색">
+                    <button class="btn btn-success mx-1">검색</button>
+                </form>
+
+            </div>
+
+            <!-- 게시글 상세 정보-->
+
+            <div id="posts_list" class="row">
+                <div class="col-md-12 ">
+                    <form class="card" >
+                        <div class="card-header d-flex justify-content-between">
+                            <label th:value="id">번호 : <span th:text="${post.id}">(id)</span></label>
+                            <label th:value="createdDate" th:text="${post.createdDate}">(작성일)</label>
+                        </div>
+                        <div class="card-header d-flex justify-content-between">
+                            <label th:value="writer">작성자 : <span th:text="${post.writer}">(작성자)</span></label>
+                            <label th:value="view"><i class=" bi bi-eye-fill" th:text="${post.viewCount}">(조회수)</i></label>
+                        </div>
+                        <div class="card-body">
+                            <div>
+                                <div >
+                                    <label id="simpleJob" value="simple" name="gradeRadio" readonly>*업무 형태 : </label>
+                                    <label for="simpleJob" class="form-check-label">&nbsp 단순 업무</label>
+                                </div>
+
+                            </div>
+
+                            <br/>
+                            <label for="title">고용비</label>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+
+                                <input type="text" class="form-control w-25 p-3" id="pay" placeholder="Enter pay" readonly>
+                                <p style="font-size:25px">&nbsp 원</p>
+                            </div>
+
+
+                            <br/>
+                            <label for="title">제목</label>
+                            <input type="text" class="form-control" id="title" th:value="${post.title}" readonly>
+                            <br/>
+                            <label for="content">내용</label>
+                            <textarea rows="5" class="form-control" id="content" th:text="${post.content}" readonly></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div> <!-- sub container end -->
+
+
+        <div class="col-2 d-flex align-items-end">
+            <div class="row p-2">
+<!--                <a href="#" role="button" class="btn btn-info bi bi-arrow-return-left mx-1"> 목록</a>-->
+                <a th:href="@{|${post.id}/edit|}" role="button" class="btn btn-primary bi bi-pencil-square mx-1"> 수정</a>
+                <button type="button" onclick="" id="btn-delete" class="btn btn-danger bi bi-trash mx-1"> 삭제</button>
+            </div>
+        </div> <!--빈 칸 역할-->
+
+
+        <!--회원 정보 카드-->
+        <div th:replace="~{fragment :: userCard}" class="col-3 mx-2 my-5">
+            <div class="card text-center " style="width: 15rem;">
+                <div class="card-body ">
+                    <h5 class="card-title">로그인 하시면 게시글 작성이 가능합니다.</h5>
+                    <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                    <a href="#" class="btn btn-primary my-3">로그인</a>
+                    <a href="#" class="btn btn-info">회원 가입</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- 댓글 입력 창 -->
+    <div class="row">
+        <div class="col-0 d-flex align-items-center ml-4">
+            <span class="border border-secondary">닉네임</span>
+        </div>
+        <form class="w-75 ml-1 ">
+            <input type="hidden" id="postsId" value="{{posts.id}}">
+
+            <div class="row">
+                <!-- 로그인 되어있는 경우 댓글 입력 창을 보여줌-->
+
+                <div class="card-body col-7">
+                    <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+                </div>
+                <div class="col-4 d-flex align-items-center">
+                    <button type="button" id="btn-comment-save"class="btn btn-outline-primary bi bi-pencil-square">댓글 등록</button>
+                </div>
+
+                <!-- 로그인을 하지 않으면 보여줌-->
+<!--                <div class="card-body" style="font-size: small"><a href="/auth/login">로그인</a>을 하시면 댓글을 등록할 수 있습니다.</div>-->
+            </div>
+
+        </form>
+    </div>
+
+    <!--댓글창-->
+    <div class="row">
+        <div class="container mb-5 mt-5">
+
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="text-center mb-3">
+                            댓글창
+                        </h3>
+                        <div class="row" >
+                            <div class="col-md-12" >
+                                <th:block th:each="comment : ${post.comments}">
+                                    <div class="media my-4" th:if="${comment.replyTargetId == 0}">
+                                        <a class="pr-3" href="#">사진</a>
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-6 d-flex">
+                                                    <h5 th:text="${comment.writer}">댓글 작성자</h5>
+                                                    <span th:text="'&nbsp;&nbsp;' + ${comment.createdDate}">작성일</span>
+                                                </div>
+
+                                                <div class="col-0">
+                                                    <div class="pull-right reply">
+                                                        <a href="#"><span class="text-info">답글</span></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-0 mx-2">
+                                                    <div class="pull-right edit">
+                                                        <a href="#"><span class="text-primary">수정</span></a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-0 text-center">
+                                                    <div class="pull-right delete">
+                                                        <a href="#"><span class="text-danger">삭제</span></a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <span th:text="${comment.content}"></span>
+
+                                            <th:block th:each="reply:${post.comments}">
+                                                <div class="media mt-4" th:if="${reply.replyTargetId == comment.id}">
+
+                                                    <a class="pr-3" href="#">사진</a>
+                                                    <div class="media-body">
+
+                                                        <div class="row">
+                                                            <div class="col-6 d-flex">
+                                                                <h5 th:text="${reply.writer}">답글 작성자</h5>
+                                                                <span th:text="'&nbsp;&nbsp;' + ${reply.createdDate}">- 3 hours ago</span>
+                                                            </div>
+                                                            <div class="col-0">
+                                                                <div class="pull-right reply">
+                                                                    <a href="#"><span class="text-info">답글</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-0 mx-2">
+                                                                <div class="pull-right edit">
+                                                                    <a href="#"><span class="text-primary">수정</span></a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-0 text-center">
+                                                                <div class="pull-right delete">
+                                                                    <a href="#"><span class="text-danger">삭제</span></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <span th:text="${reply.content}"></span>
+
+                                                    </div>
+                                                </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </th:block>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> <!-- container end-->
+
+
+<footer th:replace="~{fragment :: footer}" class="footer mt-auto py-3 bg-light ">
+    <div class="container">
+        <span class="text-muted">형식상 footer</span>
+    </div>
+</footer>
+
+</body>
+</html>
