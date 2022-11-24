@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -21,6 +22,8 @@ public class Comment {
 
     private Long postId;
     private Long replyTargetId; //이 필드의 값은 어떤 댓글의 id 값임. 이 필드에 값이 있으면 지정한 댓글에 대한 댓글임.
+
+    private List<Comment> comments;
 
     public Comment(Long id, String content, String writer, Date createdDate, Long postId, Long replyTargetId) {
         this.id = id;
