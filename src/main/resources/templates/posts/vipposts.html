@@ -85,27 +85,8 @@
                     </div>
                 </div>
             </div>
-            <!--pagination-->
+
             <div class="row d-flex justify-content-center">
-
-                <nav aria-label="Page navigation" class="my-5 mx-5" th:object="${pagination}">
-                    <ul class="pagination justify-content-center" th:with="postfix = ${keyword}?'/search?keyword='+${keyword}:''">
-
-
-                        <li class="page-item " th:if="*{prev}">
-                            <a class="page-link" href="#" th:href="@{|/vipposts${postfix}|(currentPageNum=*{startPageNum - 1})}" tabindex="-1"><</a>
-                        </li>
-                        <li class="page-item" th:each="num : ${#numbers.sequence(pagination.startPageNum, pagination.endPageNum)}">
-                            <a class="page-link" href="#" th:href="@{|/vipposts${postfix}|(currentPageNum=${num})}"
-                               th:text="${num}" th:classappend="(*{currentPageNum}==${num})?'bg-secondary text-white':''">1</a>
-                        </li>
-
-                        <li class="page-item" th:if="*{next}">
-                            <a class="page-link" href="#" th:href="@{|/vipposts${postfix}|(currentPageNum=*{endPageNum + 1})}" tabindex="-1">></a>
-                        </li>
-                    </ul>
-                </nav>
-
                 <div class="mx-5 my-5">
                     <a class="btn btn-warning" type="button" th:href="@{vipposts/new}">글쓰기</a>
                 </div>
