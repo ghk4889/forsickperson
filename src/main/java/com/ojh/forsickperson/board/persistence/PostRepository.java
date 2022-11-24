@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,7 +23,7 @@ public class PostRepository {
     }
 
     public List<Post> findAll(){
-        return (List<Post>) store.values();
+        return new ArrayList<>(store.values());
     }
 
     public long save(Post post){
