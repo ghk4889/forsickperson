@@ -20,7 +20,7 @@ public class Post {
     private String writer;
     private Long viewCount;
     private Date createdDate;
-    private Date modifiedDate;
+
 
     private List<Comment> comments;
 
@@ -31,7 +31,6 @@ public class Post {
         this.writer = writer;
         this.viewCount = 0L;
         this.createdDate = createdDate;
-        this.modifiedDate = createdDate;
     }
 
 }
