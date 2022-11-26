@@ -41,25 +41,30 @@
             <!-- 게시글 작성 폼-->
             <div id="posts_list" class="row mt-5">
                 <div class="col-md-12 ">
-                    <form class="card">
+                    <form class="card" action="/api/vipposts" method="post">
                         <div class="card-body">
                             <div>
                                 <div class="form-check-inline ">
-                                    <input type="radio" class="form-check-input" id="simpleJob" value="simple" name="gradeRadio" readonly>
-                                    <label for="simpleJob" class="form-check-label">단순 업무</label>
+                                    <input type="radio" class="form-check-input" id="SIMPLE" value="SIMPLE" name="jobKind" >
+                                    <label for="SIMPLE" class="form-check-label">단순 업무</label>
                                 </div>
 
                                 <div class="form-check-inline ">
-                                    <input type="radio" class="form-check-input" id="complicatedJob" value="complicated" name="gradeRadio" readonly>
-                                    <label for="complicatedJob" class="form-check-label">복잡한 업무</label>
+                                    <input type="radio" class="form-check-input" id="COMPLICATED" value="COMPLICATED" name="jobKind" >
+                                    <label for="COMPLICATED" class="form-check-label">복잡한 업무</label>
                                 </div>
                             </div>
 
                             <br/>
-                            <label for="title">고용비</label>
+                            <label for="pay">작성자</label>
                             <div class="d-flex flex-row bd-highlight mb-3">
+                                <input type="text" class="form-control w-25 p-3" id="writer" name="writer" value="test user 1">
+                            </div>
 
-                                <input type="text" class="form-control w-25 p-3" id="pay" placeholder="Enter pay">
+                            <br/>
+                            <label for="pay">고용비</label>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+                                <input type="text" class="form-control w-25 p-3" id="pay" name="pay" placeholder="Enter pay">
                                 <p style="font-size:25px">&nbsp 원</p>
                             </div>
 
@@ -67,10 +72,18 @@
                             <br/>
 
                             <label for="title">제목</label>
-                            <input type="text" class="form-control w-75" id="title" placeholder="Enter title">
+                            <input type="text" class="form-control w-75" id="title" name="title" placeholder="Enter title">
                             <br/>
                             <label for="content">내용</label>
-                            <textarea rows="5" class="form-control w-75" id="content" placeholder="Enter content"></textarea>
+                            <textarea rows="5" class="form-control w-75" id="content" name="content" placeholder="Enter content"></textarea>
+                        </div>
+                        <div class="col-2 d-flex align-items-end">
+                            <div class="row p-2">
+                                <!--                <a href="/" role="button" class="btn btn-info bi bi-arrow-return-left mx-1"> 목록</a>-->
+                                <input type="submit" value="작성_" class="btn btn-info bi bi-pencil-square mx-1">
+
+                                <a role="button" th:href="@{/vipposts}" id="btn-delete" class="btn btn-secondary bi bi-trash mx-1"> 취소</a>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -79,13 +92,7 @@
         </div> <!-- sub container end -->
 
 
-        <div class="col-2 d-flex align-items-end">
-            <div class="row p-2">
-                <!--                <a href="/" role="button" class="btn btn-info bi bi-arrow-return-left mx-1"> 목록</a>-->
-                <a href="#" role="button" class="btn btn-info bi bi-pencil-square mx-1"> 작성</a>
-                <a role="button" th:href="@{|/${postType}posts|}" id="btn-delete" class="btn btn-secondary bi bi-trash mx-1"> 취소</a>
-            </div>
-        </div>
+
 
         <!--회원 정보 카드-->
         <div th:replace="~{fragment :: userCard}" class="col-3 mx-2 my-5">
