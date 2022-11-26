@@ -1,17 +1,17 @@
 package com.ojh.forsickperson.board.presentation;
 
+import com.ojh.forsickperson.board.domain.JobKind;
 import com.ojh.forsickperson.board.domain.Post;
 import com.ojh.forsickperson.board.persistence.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
+import java.sql.Date;
 import java.util.List;
-import java.util.Locale;
 
 
 @Controller
@@ -21,21 +21,16 @@ public class PostController {
 
     private final PostRepository postRepo;
 
+    @PostConstruct
+    public void init(){
+        Post post = new Post("test title", "test content", 1000, JobKind.SIMPLE,
+                "test user", new Date(System.currentTimeMillis()));
 
-    @GetMapping("/")
-    public String index(Model model){
-
-        // totalRowCnt는 index.html에서 필요 없으므로 임의의 수를 줬다.
-        List<Post> posts = postRepo.findAll();
-
-        model.addAttribute("vipposts", posts);
-
-        return "posts/vipposts";
+        postRepo.save(post);
     }
 
-
     //게시글 목록 페이지
-    @GetMapping("/vipposts")
+    @GetMapping({"/", "/vipposts"})
     public String posts(Model model){
 
         List<Post> posts = postRepo.findAll();
@@ -49,6 +44,7 @@ public class PostController {
     public String post(Model model, @PathVariable long id){
         Post post = postRepo.findById(id);
         model.addAttribute("post", post);
+        log.info("[findbyid]post = {}", post);
         return "posts/post";
     }
 
@@ -66,6 +62,34 @@ public class PostController {
         return "posts/addPost";
     }
 
+    //save, update, delete 처리
+
+    //create
+    @PostMapping("/api/vipposts")
+    public String save(@ModelAttribute Post post){
+
+        post.setViewCount(0L);
+        post.setCreatedDate(new Date(System.currentTimeMillis()));
+        log.info("[insert] post={}", post);
+
+        //삽입한 게시글의 id 값이 반환됨.
+        return "redirect:/vipposts/" + postRepo.save(post);
+    }
+
+    //update
+    @PatchMapping("/api/vipposts/{id}")
+    public String edit(@PathVariable Long id, @ModelAttribute Post updateParam){
+        log.info("[update] post={}", updateParam);
+        postRepo.update(id, updateParam);
+        return "redirect:/vipposts/" + id;
+    }
+
+    //delete
+    @DeleteMapping("/api/vipposts/{id}")
+    public String delete(@PathVariable Long id){
+        postRepo.delete(id);
+        return "redirect:/";
+    }
 
 
 }

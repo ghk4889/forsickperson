@@ -27,6 +27,7 @@ public class PostRepository {
     }
 
     public long save(Post post){
+        post.setId(sequence.get());
         store.put(sequence.get(), post);
         return sequence.getAndIncrement();
     }
@@ -35,6 +36,13 @@ public class PostRepository {
         Post findPost = findById(id);
         findPost.setTitle(updateParam.getTitle());
         findPost.setContent(updateParam.getContent());
+        findPost.setJobKind(updateParam.getJobKind());
+        findPost.setPay(updateParam.getPay());
+
+    }
+
+    public void delete(@NonNull Long id){
+        store.remove(id);
     }
 
     public void clearStore(){

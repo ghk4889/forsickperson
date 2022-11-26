@@ -17,6 +17,8 @@ public class Post {
     private Long id;
     private String title;
     private String content;
+    private Integer pay;
+    private JobKind jobKind;
     private String writer;
     private Long viewCount;
     private Date createdDate;
@@ -24,10 +26,12 @@ public class Post {
 
     private List<Comment> comments;
 
-    public Post(Long id, String title, String content, String writer, Date createdDate) {
-        this.id = id;
+    public Post(String title, String content, Integer pay, JobKind jobKind,
+                String writer, Date createdDate) {
         this.title = title;
         this.content = content;
+        this.pay = pay;
+        this.jobKind = jobKind;
         this.writer = writer;
         this.viewCount = 0L;
         this.createdDate = createdDate;
