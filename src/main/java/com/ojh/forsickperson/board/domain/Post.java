@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -24,7 +25,7 @@ public class Post {
     private Date createdDate;
 
 
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
     public Post(String title, String content, Integer pay, JobKind jobKind,
                 String writer, Date createdDate) {
