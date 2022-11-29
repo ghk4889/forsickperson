@@ -124,21 +124,18 @@
         <div class="col-0 d-flex align-items-center ml-4">
             <span class="border border-secondary">닉네임</span>
         </div>
-        <form class="w-75 ml-1 ">
-            <input type="hidden" id="postsId" value="{{posts.id}}">
+        <form class="w-75 ml-1 " th:action="@{|/posts/${post.id}/comments|}" method="post">
+<!--            <input type="hidden" id="postId" value="${post.id}" name="${post.id}">-->
 
             <div class="row">
-                <!-- 로그인 되어있는 경우 댓글 입력 창을 보여줌-->
-
                 <div class="card-body col-7">
-                    <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+                    <textarea id="comment_content" name="content" class="form-control" rows="4" readonly>댓글 기능은 아직 구현되지 않았습니다.</textarea>
                 </div>
                 <div class="col-4 d-flex align-items-center">
-                    <button type="button" id="btn-comment-save"class="btn btn-outline-primary bi bi-pencil-square">댓글 등록</button>
+<!--                    <input type="submit" id="btn-comment-save" value="댓글 등록" class="btn btn-outline-primary bi bi-pencil-square">-->
                 </div>
 
-                <!-- 로그인을 하지 않으면 보여줌-->
-<!--                <div class="card-body" style="font-size: small"><a href="/auth/login">로그인</a>을 하시면 댓글을 등록할 수 있습니다.</div>-->
+
             </div>
 
         </form>

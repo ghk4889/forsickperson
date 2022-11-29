@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,6 +28,8 @@ public class PostController {
                 "test user", new Date(System.currentTimeMillis()));
 
         postRepo.save(post);
+
+        CommentInitializer.init(postRepo);
     }
 
     //게시글 목록 페이지
@@ -64,7 +67,7 @@ public class PostController {
 
     //save, update, delete 처리
 
-    //create
+    //save
     @PostMapping("/api/vipposts")
     public String save(@ModelAttribute Post post){
 

@@ -2,6 +2,8 @@ package com.ojh.forsickperson.board.persistence;
 
 import com.ojh.forsickperson.board.domain.Post;
 import lombok.NonNull;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Repository;
 
 
