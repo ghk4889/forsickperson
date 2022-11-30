@@ -63,7 +63,7 @@
                             <tr>
                                 <th style="width: 7%">No.</th>
                                 <th style="width: 40%">제목</th>
-                                <th style="width: 12%">고용비</th>
+                                <th style="width: 12%">고용비(원)</th>
                                 <th style="width: 12%">작성자</th>
                                 <th style="width: 17%">작성일</th>
                                 <th style="width: 12%">조회수</th>
@@ -98,7 +98,7 @@
         <!--        <div class="col"></div> &lt;!&ndash;빈 칸 역할&ndash;&gt;-->
 
         <!--회원 정보 카드-->
-        <div th:fragment="userCard" class="col-3 mx-2 my-5">
+        <div th:replace="~{fragment :: userCard}" class="col-3 mx-2 my-5">
             <script>
                 function employer() {
                     alert("아픈 사람(장애인, 큰 병 앓는 사람 등)")

@@ -24,6 +24,15 @@ public class Comment {
 
     private List<Comment> comments;
 
+    public Comment(Long id, String content, String writer, Date createdDate, Long postId, Long replyTargetId) {
+        this.id = id;
+        this.content = content;
+        this.writer = writer;
+        this.createdDate = createdDate;
+        this.postId = postId;
+        this.replyTargetId = replyTargetId;
+    }
+
     public Comment( String content, String writer, Date createdDate, Long postId, Long replyTargetId) {
         this.content = content;
         this.writer = writer;

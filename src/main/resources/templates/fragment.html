@@ -30,7 +30,7 @@
 
 <!--검색창-->
 <form th:fragment="searchForm" id="searchForm" action="#" method="GET" class="form-inline p-2" role="search">
-    <input type="text" name="keyword" class="form-control" id="search" placeholder="검색">
+    <input type="text" name="keyword" class="form-control" id="search" placeholder="검색 기능 X." readonly>
     <button class="btn btn-success mx-1">검색</button>
 </form>
 
@@ -38,11 +38,11 @@
 <div th:fragment="userCard" class="col-3 mx-2 my-5">
     <script>
                 function employer() {
-                    alert("아픈 사람(장애인, 큰 병 앓는 사람 등)")
+                    alert("고용인 - 아픈 사람(ex. 장애인, 입원 중인 사람 등)")
                 }
 
                 function employee(){
-                    alert("피 고용인(보호자)")
+                    alert("피 고용인 - 돈을 받고 일을 대신 수행해주는 사람")
                 }
             </script>
     <div class="card text-center" style="width: 15rem;">
@@ -50,7 +50,7 @@
 
             <h5 class="card-title">핵심역량 경진대회</h5>
             <div style="text-align:left;" >
-                <p class="card-text mb-0">*팀명: XXX </p>
+                <p class="card-text mb-0">*팀명: 핑거스냅 </p>
                 <p class="card-text mb-0">팀장: 오종화 </p>
                 <p class="card-text">팀원: 석민환, 황지원</p>
             </div>
